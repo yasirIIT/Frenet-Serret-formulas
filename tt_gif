@@ -1,0 +1,22 @@
+set size 1.0, 1.0
+set terminal gif animate delay 1 size 1000, 1000
+set output 'a.gif'
+stats 'f_data.txt' nooutput
+set xrange[-20:+20]
+set yrange[-20:+20]
+set zrange[0:+20]
+set style fill solid
+
+set style circle radius 1.0
+set size ratio -1
+set grid
+
+
+do for [j=1:int(STATS_blocks)]{
+  splot 'f_data1.txt' u 1:2:3 w lines lw 2 lc rgb "magenta" notitle,\
+  'f_data.txt' u 1:2:3 index (j-1) w points pt 7 lc rgb "black" title sprintf("STEP=%i",j),\
+  'f_data.txt' using 1:2:3:4:5:6 index (j-1) with vectors filled head lw 2 lc rgb "red" notitle,\
+  'f_data.txt' using 1:2:3:7:8:9 index (j-1) with vectors filled head lw 2 lc rgb "blue" notitle,\
+  'f_data.txt' using 1:2:3:10:11:12 index (j-1) with vectors filled head lw 2 lc rgb "grey30" notitle  
+}	
+
